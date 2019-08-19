@@ -2,8 +2,6 @@
 const presupuestoUsuario = prompt('Cual es tu presupuesto Semanal?');
 let cantidadPresupuesto;
 
-console.log(presupuestoUsuario);
-
 // Clases
 // Clase de Presupuesto
 class Presupuesto {
@@ -16,6 +14,18 @@ class Presupuesto {
 		return (this.restante -= Number(cantidad));
 	}
 }
+// Clase de Interfaz maneja todo lo relacionado a el HTML
+
+class Interfaz {
+	insertarPresupuesto(cantidad) {
+		const presupuestoSpan = document.querySelector('span#total');
+		const restanteSpan = document.querySelector('span#restante');
+
+		// Insertar al HTML
+		presupuestoSpan.innerHTML = `${cantidad}`;
+		restanteSpan.innerHTML = `${cantidad}`;
+	}
+}
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,5 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	} else {
 		// Instanciar un presupuesto
 		cantidadPresupuesto = new Presupuesto(presupuestoUsuario);
+		// Instanciar la clase de Interfaz
+		const ui = new Interfaz();
+		ui.insertarPresupuesto(cantidadPresupuesto.presupuesto);
 	}
 });
