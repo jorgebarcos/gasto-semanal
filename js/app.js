@@ -1,5 +1,6 @@
 // Variables
 const presupuestoUsuario = prompt('Cual es tu presupuesto Semanal?');
+const formulario = document.getElementById('agregar-gasto');
 let cantidadPresupuesto;
 
 // Clases
@@ -25,6 +26,24 @@ class Interfaz {
 		presupuestoSpan.innerHTML = `${cantidad}`;
 		restanteSpan.innerHTML = `${cantidad}`;
 	}
+	imprimirMensaje(mensaje, tipo) {
+		const divMensaje = document.createElement('div');
+		divMensaje.classList.add('text-center', 'alert');
+		if (tipo === 'error') {
+			divMensaje.classList.add('alert-danger');
+		} else {
+			divMensaje.classList.add('alert-success');
+		}
+		divMensaje.appendChild(document.createTextNode(mensaje));
+		// Insertar en el DOM
+		document.querySelector('.primario').insertBefore(divMensaje, formulario);
+
+		// Quitar el alert despues de 3 segundos
+		setTimeout(function() {
+			document.querySelector('.primario .alert').remove();
+			formulario.reset();
+		}, 3000);
+	}
 }
 
 // Event Listeners
@@ -37,5 +56,23 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Instanciar la clase de Interfaz
 		const ui = new Interfaz();
 		ui.insertarPresupuesto(cantidadPresupuesto.presupuesto);
+	}
+});
+
+formulario.addEventListener('submit', function(e) {
+	e.preventDefault();
+
+	// Leer del formulario de Gastos
+	const nombreGasto = document.querySelector('#gasto').value;
+	const cantidadGasto = document.querySelector('#cantidad').value;
+
+	// Instancia la Interfaz
+	const ui = new Interfaz();
+	// Comprobar que los campos no esten vacios
+	if (nombreGasto === '' || cantidadGasto === '') {
+		// 2 parametros: mensaje y tipo
+		ui.imprimirMensaje('Hubo un error', 'error');
+	} else {
+		console.log('el gasto se agrego ');
 	}
 });
