@@ -44,6 +44,22 @@ class Interfaz {
 			formulario.reset();
 		}, 3000);
 	}
+	// Inserta los gastos a la lista
+	agregarGastoListado(nombre, cantidad) {
+		const gastosListado = document.querySelector('#gastos ul');
+
+		// Crear un LI
+		const li = document.createElement('li');
+		li.className = 'list-group-item d-flex justify-content-between align-items-center';
+		// Insertar el gasto
+		li.innerHTML = `
+            ${nombre}
+            <span class="badge badge-primary badge-pill"> $ ${cantidad} </span>
+        `;
+
+		// Insertar al HTML
+		gastosListado.appendChild(li);
+	}
 }
 
 // Event Listeners
@@ -73,6 +89,8 @@ formulario.addEventListener('submit', function(e) {
 		// 2 parametros: mensaje y tipo
 		ui.imprimirMensaje('Hubo un error', 'error');
 	} else {
-		console.log('el gasto se agrego ');
+		// Insertar en el HTML
+		ui.imprimirMensaje('Correcto', 'correcto');
+		ui.agregarGastoListado(nombreGasto, cantidadGasto);
 	}
 });
